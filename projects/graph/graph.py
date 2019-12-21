@@ -30,7 +30,7 @@ class Graph:
         """
         Get all neighbors (edges) of a vertex.
         """
-        pass  # TODO
+        return self.vertices[vertex_id]
 
     def bft(self, starting_vertex):
         """
@@ -45,7 +45,7 @@ class Graph:
             if v not in visited:
                 print(v)
                 visited.add(v)
-                for neighbor in self.vertices[v]:
+                for neighbor in self.get_neighbors(v):
                     queue.enqueue(neighbor)
 
     def dft(self, starting_vertex):
@@ -61,7 +61,7 @@ class Graph:
             if v not in visited:
                 print(v)
                 visited.add(v)
-                for neighbor in self.vertices[v]:
+                for neighbor in self.get_neighbors(v):
                     stack.push(neighbor)
 
     def dft_recursive(self, starting_vertex):
@@ -71,7 +71,22 @@ class Graph:
 
         This should be done using recursion.
         """
-        pass  # TODO
+        visited = set()
+
+        def traverse_graph(vertex):
+            if vertex in visited:
+                return None
+            else:
+                visited.add(vertex)
+                print(vertex)
+                neighbors = Stack()
+                for neighbor in self.get_neighbors(vertex):
+                    neighbors.push(neighbor)
+                while neighbors.size() > 0:
+                    neighbor = neighbors.pop()
+                    traverse_graph(neighbor)
+
+        traverse_graph(starting_vertex)
 
     def bfs(self, starting_vertex, destination_vertex):
         """
@@ -142,8 +157,8 @@ if __name__ == '__main__':
         1, 2, 4, 3, 7, 6, 5
         1, 2, 4, 3, 7, 5, 6
     '''
+    print("BFT")
     graph.bft(1)
-    print()
 
     '''
     Valid DFT paths:
@@ -152,9 +167,10 @@ if __name__ == '__main__':
         1, 2, 4, 7, 6, 3, 5
         1, 2, 4, 6, 3, 5, 7
     '''
+    print("DFT")
     graph.dft(1)
-    print()
-    # graph.dft_recursive(1)
+    print("DFT Recursive")
+    graph.dft_recursive(1)
 
     # '''
     # Valid BFS path:
