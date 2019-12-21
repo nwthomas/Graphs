@@ -94,7 +94,21 @@ class Graph:
         starting_vertex to destination_vertex in
         breath-first order.
         """
-        pass  # TODO
+        queue = Queue()
+        visited = set()
+        queue.enqueue([starting_vertex])
+        while queue.size() > 0:
+            path = queue.dequeue()
+            new_vertex = path[len(path) - 1]
+            if new_vertex == destination_vertex:
+                return path
+            elif new_vertex not in visited:
+                visited.add(new_vertex)
+                for neighbor in self.get_neighbors(new_vertex):
+                    new_path = path[:]
+                    new_path.append(neighbor)
+                    queue.enqueue(new_path)
+        return []
 
     def dfs(self, starting_vertex, destination_vertex):
         """
@@ -136,47 +150,49 @@ if __name__ == '__main__':
     graph.add_edge(2, 3)
     graph.add_edge(4, 6)
 
-    '''
-    Should print:
-        {1: {2}, 2: {3, 4}, 3: {5}, 4: {6, 7}, 5: {3}, 6: {3}, 7: {1, 6}}
-    '''
-    print(graph.vertices)
-
-    '''
-    Valid BFT paths:
-        1, 2, 3, 4, 5, 6, 7
-        1, 2, 3, 4, 5, 7, 6
-        1, 2, 3, 4, 6, 7, 5
-        1, 2, 3, 4, 6, 5, 7
-        1, 2, 3, 4, 7, 6, 5
-        1, 2, 3, 4, 7, 5, 6
-        1, 2, 4, 3, 5, 6, 7
-        1, 2, 4, 3, 5, 7, 6
-        1, 2, 4, 3, 6, 7, 5
-        1, 2, 4, 3, 6, 5, 7
-        1, 2, 4, 3, 7, 6, 5
-        1, 2, 4, 3, 7, 5, 6
-    '''
-    print("BFT")
-    graph.bft(1)
-
-    '''
-    Valid DFT paths:
-        1, 2, 3, 5, 4, 6, 7
-        1, 2, 3, 5, 4, 7, 6
-        1, 2, 4, 7, 6, 3, 5
-        1, 2, 4, 6, 3, 5, 7
-    '''
-    print("DFT")
-    graph.dft(1)
-    print("DFT Recursive")
-    graph.dft_recursive(1)
+    # '''
+    # Should print:
+    #     {1: {2}, 2: {3, 4}, 3: {5}, 4: {6, 7}, 5: {3}, 6: {3}, 7: {1, 6}}
+    # '''
+    # print("Graph Vertices:")
+    # print(graph.vertices)
 
     # '''
-    # Valid BFS path:
-    #     [1, 2, 4, 6]
+    # Valid BFT paths:
+    #     1, 2, 3, 4, 5, 6, 7
+    #     1, 2, 3, 4, 5, 7, 6
+    #     1, 2, 3, 4, 6, 7, 5
+    #     1, 2, 3, 4, 6, 5, 7
+    #     1, 2, 3, 4, 7, 6, 5
+    #     1, 2, 3, 4, 7, 5, 6
+    #     1, 2, 4, 3, 5, 6, 7
+    #     1, 2, 4, 3, 5, 7, 6
+    #     1, 2, 4, 3, 6, 7, 5
+    #     1, 2, 4, 3, 6, 5, 7
+    #     1, 2, 4, 3, 7, 6, 5
+    #     1, 2, 4, 3, 7, 5, 6
     # '''
-    # print(graph.bfs(1, 6))
+    # print("BFT:")
+    # graph.bft(1)
+
+    # '''
+    # Valid DFT paths:
+    #     1, 2, 3, 5, 4, 6, 7
+    #     1, 2, 3, 5, 4, 7, 6
+    #     1, 2, 4, 7, 6, 3, 5
+    #     1, 2, 4, 6, 3, 5, 7
+    # '''
+    # print("DFT:")
+    # graph.dft(1)
+    # print("DFT Recursive:")
+    # graph.dft_recursive(1)
+
+    '''
+    Valid BFS path:
+        [1, 2, 4, 6]
+    '''
+    print("BFS path:")
+    print(graph.bfs(1, 6))
 
     # '''
     # Valid DFS paths:
